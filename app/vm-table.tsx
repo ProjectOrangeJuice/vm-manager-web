@@ -28,8 +28,8 @@ function VMTable(data : VMDetails[]) {
         {data.map((vm) => (
           <tr key={vm.Name}>
             <td>{vm.Name}</td>
-            <td>{vm.CPU}</td>
-            <td>{vm.Memory}</td>
+            <td>{vm.CPU.toFixed(1)}%</td>
+            <td>{vm.Memory.toFixed(1)}%</td>
             <td>
             <table>
               <thead>
@@ -44,7 +44,7 @@ function VMTable(data : VMDetails[]) {
               <tr key={storage.Mount}>
                 <td>{storage.Name}</td>
                 <td>{storage.Mount}</td>
-                <td>{storage.SpaceUsed}</td>
+                <td>{storage.SpaceUsed.toFixed(2)}%</td>
               </tr>
             ))}
               </tbody>
