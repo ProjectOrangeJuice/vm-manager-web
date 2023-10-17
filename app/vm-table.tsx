@@ -30,13 +30,26 @@ function VMTable(data : VMDetails[]) {
             <td>{vm.Name}</td>
             <td>{vm.CPU}</td>
             <td>{vm.Memory}</td>
-            <td>{vm.Storage.map((storage) => (
-              <tr key={storage.Name}>
+            <td>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Mount</th>
+                  <th>Space Used</th>
+                </tr>
+              </thead>
+              <tbody>
+            {vm.Storage.map((storage) => (
+              <tr key={storage.Mount}>
                 <td>{storage.Name}</td>
                 <td>{storage.Mount}</td>
                 <td>{storage.SpaceUsed}</td>
               </tr>
-            ))}</td>
+            ))}
+              </tbody>
+            </table>
+            </td>
           </tr>
         ))}
       </tbody>

@@ -7,7 +7,6 @@ export default function Home() {
   const [vmDetails, setVmDetails] = useState<VMDetails[]>([]);
   useEffect(() => {
     const fetchVmDetails = async () => {
-      // Fetch data from API on different port
       const response = await fetch("http://localhost:8081/api/list");
       const data = await response.json();
       setVmDetails(data);
