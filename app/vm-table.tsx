@@ -1,4 +1,3 @@
-'use client'
 
 type VMStorage = {
   Name: string;
@@ -26,20 +25,18 @@ function VMTable(data : VMDetails[]) {
         </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
-          <tr key={index}>
-            <td>{item.Name}</td>
-            <td>{item.CPU}</td>
-            <td>{item.Memory}</td>
-            <td>
-              <ul>
-                {item.Storage.map((storage, index) => (
-                  <li key={index}>
-                    {storage.Name} ({storage.Mount}): {storage.SpaceUsed} GB
-                  </li>
-                ))}
-              </ul>
-            </td>
+        {data.map((vm) => (
+          <tr key={vm.Name}>
+            <td>{vm.Name}</td>
+            <td>{vm.CPU}</td>
+            <td>{vm.Memory}</td>
+            <td>{vm.Storage.map((storage) => (
+              <tr key={storage.Name}>
+                <td>{storage.Name}</td>
+                <td>{storage.Mount}</td>
+                <td>{storage.SpaceUsed}</td>
+              </tr>
+            ))}</td>
           </tr>
         ))}
       </tbody>

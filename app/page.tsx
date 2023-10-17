@@ -1,17 +1,37 @@
+'use client'
 import VMTable from "./vm-table";
 import { VMDetails } from "./vm-table";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [vmDetails, setVmDetails] = useState<VMDetails[]>([]);
+  useEffect(() => {
+    const fetchVmDetails = async () => {
+      // Fetch data from API on different port
+      const response = await fetch("http://localhost:8081/api/list");
+      const data = await response.json();
+      setVmDetails(data);
+    };
+
+    fetchVmDetails();
+
+    const interval = setInterval(() => {
+      fetchVmDetails();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
   return ( 
     <div>
       <h1>Hello, here are your VMs</h1>
-      <VMTable {...sampleVMs} />
+      { VMTable(vmDetails)}
     </div>
   );
 }
 
 
-const sampleVMs: VMDetails[] = [
+
+let sampleVMs: VMDetails[] = [
   {
     "Name":"Test client",
     "CPU":17.77,
