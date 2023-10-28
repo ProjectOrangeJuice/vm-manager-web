@@ -94,7 +94,9 @@ export function VMTable(data: ApiListResponse) {
 
         <div className="tile border border-green-200">
           <h1 className="text-lg text-center">{vm.Name}</h1>
-          <img src="server-icon.png" alt="server icon" className="w-20 h-20" />
+          <div className="flex justify-center">
+            <img src="server-icon.png" alt="server icon" className="w-20 h-20" />
+          </div>
           <div className="grid grid-cols-2">
             <div className="tile">
               <h3>CPU: <b>{vm.CPU.toFixed(1)}%</b></h3>
@@ -127,7 +129,9 @@ export function VMTable(data: ApiListResponse) {
 
         <div className="tile border border-green-200">
           <h1 className="text-lg text-center">{vm.Name} <span className="text-red-600">-disconnected-</span></h1>
-          <img src="server-icon.png" alt="server icon" className="w-20 h-20" />
+          <div className="flex justify-center">
+            <img src="server-icon.png" alt="server icon" className="w-20 h-20" />
+          </div>
         </div>
 
       ))}
