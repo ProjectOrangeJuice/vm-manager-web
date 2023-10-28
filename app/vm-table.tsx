@@ -28,12 +28,11 @@ export type ApiListResponse = {
 function VMTable(data: ApiListResponse) {
 
   // Display vms in four columns
-  let d = data.ActiveClients;
   return (
 
     <div className="container m-auto grid md:grid-cols-3">
 
-      {d.map((vm) => (
+      {data.ActiveClients.map((vm) => (
 
         <div className="tile border border-green-200">
           <h1 className="text-lg text-center">{vm.Name}</h1>
@@ -60,6 +59,17 @@ function VMTable(data: ApiListResponse) {
           ))}
 
 
+        </div>
+
+      ))}
+
+
+      {/* below are the disconnected machines */}
+      {data.DisconnectedClients.map((vm) => (
+
+        <div className="tile border border-green-200">
+          <h1 className="text-lg text-center">{vm.Name} <span className="text-red-600">-disconnected-</span></h1>
+          <img src="server-icon.png" alt="server icon" className="w-20 h-20" />
         </div>
 
       ))}
