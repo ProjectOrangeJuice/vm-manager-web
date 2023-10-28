@@ -12,16 +12,28 @@ export type VMDetails = {
   Storage: VMStorage[];
 }
 
+export type VMInfo = {
+  Name: string;
+  Serial: string;
+  Fingerprint: string;
+}
 
-function VMTable(data: VMDetails[]) {
+export type ApiListResponse = {
+  ActiveClients: VMDetails[];
+  DisconnectedClients: VMInfo[];
+  WaitingClients: VMInfo[];
+}
+
+
+function VMTable(data: ApiListResponse) {
 
   // Display vms in four columns
-
+  let d = data.ActiveClients;
   return (
 
     <div className="container m-auto grid md:grid-cols-3">
 
-      {data.map((vm) => (
+      {d.map((vm) => (
 
         <div className="tile border border-green-200">
           <h1 className="text-lg text-center">{vm.Name}</h1>
@@ -51,7 +63,7 @@ function VMTable(data: VMDetails[]) {
         </div>
 
       ))}
-      
+
     </div>
   );
 }
