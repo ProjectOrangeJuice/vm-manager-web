@@ -21,10 +21,9 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
   return ( 
-    <div>
-      <h1>Hello, here are your VMs</h1>
-      { VMTable(vmDetails)}
-    </div>
+    <body className="h-full">
+      { VMTable(sampleVMs) }
+    </body>
   );
 }
 
@@ -72,5 +71,47 @@ let sampleVMs: VMDetails[] = [
       {"Name":"/dev/sda1","Mount":"/boot/efi","SpaceUsed":0.50},
       {"Name":"tmpfs","Mount":"/run/user/1000","SpaceUsed":0.01}
     ]
-  }
+  },
+  {
+    "Name":"Web server",
+    "CPU":8.90,
+    "Memory":12.34,
+    "Storage":[
+      {"Name":"tmpfs","Mount":"/run","SpaceUsed":0.02},
+      {"Name":"/dev/mapper/vgubuntu-root","Mount":"/","SpaceUsed":5.00},
+      {"Name":"tmpfs","Mount":"/dev/shm","SpaceUsed":0.50},
+      {"Name":"tmpfs","Mount":"/run/lock","SpaceUsed":0.05},
+      {"Name":"/dev/sda2","Mount":"/boot","SpaceUsed":4.00},
+      {"Name":"/dev/sda1","Mount":"/boot/efi","SpaceUsed":0.25},
+      {"Name":"tmpfs","Mount":"/run/user/1000","SpaceUsed":0.01}
+    ]
+  },
+  {
+    "Name":"Database server",
+    "CPU":15.67,
+    "Memory":32.10,
+    "Storage":[
+      {"Name":"tmpfs","Mount":"/run","SpaceUsed":0.05},
+      {"Name":"/dev/mapper/vgubuntu-root","Mount":"/","SpaceUsed":15.00},
+      {"Name":"tmpfs","Mount":"/dev/shm","SpaceUsed":2.00},
+      {"Name":"tmpfs","Mount":"/run/lock","SpaceUsed":0.15},
+      {"Name":"/dev/sda2","Mount":"/boot","SpaceUsed":12.00},
+      {"Name":"/dev/sda1","Mount":"/boot/efi","SpaceUsed":0.75},
+      {"Name":"tmpfs","Mount":"/run/user/1000","SpaceUsed":0.01}
+    ]
+  },
+  {
+    "Name":"Backup server",
+    "CPU":5.43,
+    "Memory":8.90,
+    "Storage":[
+      {"Name":"tmpfs","Mount":"/run","SpaceUsed":0.01},
+      {"Name":"/dev/mapper/vgubuntu-root","Mount":"/","SpaceUsed":2.50},
+      {"Name":"tmpfs","Mount":"/dev/shm","SpaceUsed":0.25},
+      {"Name":"tmpfs","Mount":"/run/lock","SpaceUsed":0.02},
+      {"Name":"/dev/sda2","Mount":"/boot","SpaceUsed":2.00},
+      {"Name":"/dev/sda1","Mount":"/boot/efi","SpaceUsed":0.10},
+      {"Name":"tmpfs","Mount":"/run/user/1000","SpaceUsed":0.01}
+    ]
+  },
 ];

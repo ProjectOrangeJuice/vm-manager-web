@@ -13,47 +13,46 @@ export type VMDetails = {
 }
 
 
-function VMTable(data : VMDetails[]) {
+function VMTable(data: VMDetails[]) {
+
+  // Display vms in four columns
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>CPU</th>
-          <th>Memory</th>
-          <th>Storage</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((vm) => (
-          <tr key={vm.Name}>
-            <td>{vm.Name}</td>
-            <td>{vm.CPU.toFixed(1)}%</td>
-            <td>{vm.Memory.toFixed(1)}%</td>
-            <td>
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Mount</th>
-                  <th>Space Used</th>
-                </tr>
-              </thead>
-              <tbody>
-            {vm.Storage.map((storage) => (
-              <tr key={storage.Mount}>
-                <td>{storage.Name}</td>
-                <td>{storage.Mount}</td>
-                <td>{storage.SpaceUsed.toFixed(2)}%</td>
-              </tr>
-            ))}
-              </tbody>
-            </table>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+
+    <div className="container m-auto grid md:grid-cols-3">
+
+      {data.map((vm) => (
+
+        <div className="tile border border-green-200">
+          <h1 className="text-lg text-center">{vm.Name}</h1>
+          <img src="server-icon.png" alt="server icon" className="w-20 h-20" />
+          <div className="grid grid-cols-2">
+            <div className="tile">
+              <h3>CPU: <b>{vm.CPU.toFixed(1)}%</b></h3>
+            </div>
+            <div className="tile">
+              <h3>Memory: <b>{vm.Memory.toFixed(1)}%</b></h3>
+            </div>
+          </div>
+
+          <hr />
+          {vm.Storage.map((storage) => (
+            <div className="grid grid-cols-2">
+              <div className="tile">
+                <h3>{storage.Name}({storage.Mount})</h3>
+              </div>
+              <div className="tile">
+                <h3>Space Used: <b>{storage.SpaceUsed.toFixed(1)}%</b></h3>
+              </div>
+            </div>
+          ))}
+
+
+        </div>
+
+      ))}
+      
+    </div>
   );
 }
 
@@ -61,4 +60,3 @@ export default VMTable;
 
 
 
-  
