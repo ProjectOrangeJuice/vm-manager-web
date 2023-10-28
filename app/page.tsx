@@ -1,10 +1,10 @@
 'use client'
-import VMTable from "./vm-table";
-import { ApiListResponse } from "./vm-table";
+
+import { ApiListResponse, WaitingTable, VMTable } from "./vm-table";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [vmLists, setVmDetails] = useState<ApiListResponse>({
+  const [apiResp, setVmDetails] = useState<ApiListResponse>({
     ActiveClients: [],
     DisconnectedClients: [],
     WaitingClients: [],
@@ -26,7 +26,8 @@ export default function Home() {
   }, []);
   return ( 
     <body className="h-full">
-      { VMTable(vmLists) }
+      { VMTable(apiResp) }
+      { WaitingTable(apiResp) }
     </body>
   );
 }

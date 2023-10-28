@@ -25,8 +25,66 @@ export type ApiListResponse = {
 }
 
 
-function VMTable(data: ApiListResponse) {
+export function WaitingTable(data: ApiListResponse) {
 
+  if (data.WaitingClients == null || data.WaitingClients.length == 0) {
+    return (<div></div>)
+  }
+
+  const decline = (id:string) => {
+    // Send post request to decline
+    return () => {
+      fetch("http://localhost:8081/api/waiting/"+id, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ allow:false }),
+      });
+    }
+  }
+  const accept = (id:string) => {
+    // Send post request to decline
+    return () => {
+      fetch("http://localhost:8081/api/waiting/"+id, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ allow:true }),
+      });
+    }
+  }
+
+  return (
+    <table className="table-auto">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Serial</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.WaitingClients.map((vm) => (
+          <tr>
+            <td>{vm.Name}</td>
+            <td>{vm.Serial}</td>
+            <td><button onClick={accept(vm.Serial)} className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Accept</button>
+            <button  onClick={decline(vm.Serial)} className="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Decline</button></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+  )
+
+}
+
+export function VMTable(data: ApiListResponse) {
+  if (data.ActiveClients == null || data.ActiveClients.length == 0) {
+    return (<div></div>)
+  }
   // Display vms in four columns
   return (
 
@@ -77,8 +135,4 @@ function VMTable(data: ApiListResponse) {
     </div>
   );
 }
-
-export default VMTable;
-
-
 
