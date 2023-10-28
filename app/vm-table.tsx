@@ -51,7 +51,7 @@ function VMTable(data: ApiListResponse) {
           {vm.Storage.map((storage) => (
             <div className="grid grid-cols-2">
               <div className="tile">
-                <h3>{storage.Name}({storage.Mount})</h3>
+                <h3>{storage.Mount} ({storage.Name})</h3>
               </div>
               <div className="tile">
                 <h3>Space Used: <b>{storage.SpaceUsed.toFixed(1)}%</b></h3>
