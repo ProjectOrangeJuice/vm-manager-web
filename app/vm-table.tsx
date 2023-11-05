@@ -21,9 +21,9 @@ export type VMInfo = {
 }
 
 export type ApiListResponse = {
-  ActiveClients: VMDetails[];
-  DisconnectedClients: VMInfo[];
-  WaitingClients: VMInfo[];
+  ActiveClients?: VMDetails[];
+  DisconnectedClients?: VMInfo[];
+  WaitingClients?: VMInfo[];
 }
 
 
@@ -84,7 +84,10 @@ export function WaitingTable(data: ApiListResponse) {
 
 export function VMTable(data: ApiListResponse) {
   if (data.ActiveClients == null || data.ActiveClients.length == 0) {
-    return (<div></div>)
+    data.ActiveClients = [];
+  }
+  if (data.DisconnectedClients == null || data.DisconnectedClients.length == 0) {
+    data.DisconnectedClients = [];
   }
   // Display vms in four columns
   return (
