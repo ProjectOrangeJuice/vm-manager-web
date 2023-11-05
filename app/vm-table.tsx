@@ -96,6 +96,7 @@ export function WaitingTable(data: ApiListResponse) {
 
 export function VMTable(data: ApiListResponse) {
   const updateClient = (id: string) => {
+    console.log("Updating client id " + id)
     // Send post request to decline
     return () => {
       fetch(`${process.env.API_URL}/api/update/${id}`, {
