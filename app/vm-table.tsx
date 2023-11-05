@@ -34,7 +34,7 @@ export function WaitingTable(data: ApiListResponse) {
   const decline = (id:string) => {
     // Send post request to decline
     return () => {
-      fetch("http://localhost:8081/api/waiting/"+id, {
+      fetch("/api/waiting/"+id, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export function WaitingTable(data: ApiListResponse) {
   const accept = (id:string) => {
     // Send post request to decline
     return () => {
-      fetch("http://localhost:8081/api/waiting/"+id, {
+      fetch("/api/waiting/"+id, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
