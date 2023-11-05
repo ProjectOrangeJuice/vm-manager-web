@@ -12,6 +12,7 @@ export type VMDetails = {
   Memory: number;
   Version: string;
   Hostname: string;
+  Networks: Network[];
   Storage: VMStorage[];
 }
 
@@ -21,19 +22,21 @@ export type VMInfo = {
   Fingerprint: string;
 }
 
+type Network = {
+  IP: string;
+  MAC: string;
+  Name: string;
+}
+
+
 export type ApiListResponse = {
-  ActiveClients?: VMDetails[];
-  DisconnectedClients?: VMInfo[];
-  WaitingClients?: VMInfo[];
+  ActiveClients: VMDetails[];
+  DisconnectedClients: VMInfo[];
+  WaitingClients: VMInfo[];
 }
 
 
 export function WaitingTable(data: ApiListResponse) {
-
-  if (data.WaitingClients == null || data.WaitingClients.length == 0) {
-    return (<div></div>)
-  }
-
   const decline = (id: string) => {
     // Send post request to decline
     return () => {
@@ -58,6 +61,14 @@ export function WaitingTable(data: ApiListResponse) {
       });
     }
   }
+
+  if (data.WaitingClients.length == 0) {
+    return (
+      <div className="text-center">
+      </div>
+    )
+  }
+
   return (
     <table className="table-auto">
       <thead>
@@ -84,13 +95,6 @@ export function WaitingTable(data: ApiListResponse) {
 }
 
 export function VMTable(data: ApiListResponse) {
-  if (data.ActiveClients == null || data.ActiveClients.length == 0) {
-    data.ActiveClients = [];
-  }
-  if (data.DisconnectedClients == null || data.DisconnectedClients.length == 0) {
-    data.DisconnectedClients = [];
-  }
-
   const updateClient = (id: string) => {
     // Send post request to decline
     return () => {
@@ -132,6 +136,18 @@ export function VMTable(data: ApiListResponse) {
               <h3>Memory: <b>{vm.Memory.toFixed(1)}%</b></h3>
             </div>
           </div>
+
+          <hr />
+          {vm.Networks.map((network) => (
+            <div className="grid grid-cols-2">
+              <div className="tile">
+                <h3>{network.Name}</h3>
+              </div>
+              <div className="tile">
+                <h3>{network.IP} ({network.MAC})</h3>
+              </div>
+            </div>
+          ))}
 
           <hr />
           {vm.Storage.map((storage) => (

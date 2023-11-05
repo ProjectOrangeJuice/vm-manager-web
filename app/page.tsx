@@ -15,7 +15,7 @@ export default function Home() {
     const fetchVmDetails = async () => {
       const response = await fetch(`${process.env.API_URL}/api/list`);
       const data = await response.json();
-      setVmDetails(data);
+      setVmDetails(replaceNullWithEmptyList(data));
     };
 
     fetchVmDetails();
@@ -26,12 +26,26 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, []);
-  return ( 
+  return (
     <body className="h-full">
-      { VMTable(apiResp) }
-      { WaitingTable(apiResp) }
+      {VMTable(apiResp)}
+      {WaitingTable(apiResp)}
       <ToastContainer />
     </body>
   );
 }
 
+
+function replaceNullWithEmptyList(apiResp: ApiListResponse): ApiListResponse {
+  apiResp.ActiveClients = apiResp.ActiveClients ?? [];
+  apiResp.DisconnectedClients = apiResp.DisconnectedClients ?? [];
+  apiResp.WaitingClients = apiResp.WaitingClients ?? [];
+
+  apiResp.ActiveClients.forEach((vm) => {
+    vm.Networks = vm.Networks ?? [];
+    vm.Storage = vm.Storage ?? [];
+  });
+
+
+  return apiResp;
+}
