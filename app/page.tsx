@@ -11,7 +11,7 @@ export default function Home() {
   });
   useEffect(() => {
     const fetchVmDetails = async () => {
-      const response = await fetch("/api/list");
+      const response = await fetch(`${process.env.API_URL}/api/list`);
       const data = await response.json();
       setVmDetails(data);
     };

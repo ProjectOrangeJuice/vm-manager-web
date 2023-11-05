@@ -9,6 +9,8 @@ export type VMDetails = {
   Name: string;
   CPU: number;
   Memory: number;
+  Version: string;
+  Hostname: string;
   Storage: VMStorage[];
 }
 
@@ -34,7 +36,7 @@ export function WaitingTable(data: ApiListResponse) {
   const decline = (id:string) => {
     // Send post request to decline
     return () => {
-      fetch("/api/waiting/"+id, {
+      fetch(`${process.env.API_URL}/api/waiting/{id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +48,7 @@ export function WaitingTable(data: ApiListResponse) {
   const accept = (id:string) => {
     // Send post request to decline
     return () => {
-      fetch("/api/waiting/"+id, {
+      fetch(`${process.env.API_URL}/api/waiting/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +57,6 @@ export function WaitingTable(data: ApiListResponse) {
       });
     }
   }
-
   return (
     <table className="table-auto">
       <thead>
@@ -93,10 +94,15 @@ export function VMTable(data: ApiListResponse) {
       {data.ActiveClients.map((vm) => (
 
         <div className="tile border border-green-200">
-          <h1 className="text-lg text-center">{vm.Name}</h1>
+          <h1 className="text-lg text-center">{vm.Name}({vm.Hostname})</h1>
           <div className="flex justify-center">
             <img src="server-icon.png" alt="server icon" className="w-20 h-20" />
           </div>
+
+          <div className="tile">
+              <h3>Version: <b>{vm.Version}</b></h3>
+            </div>
+
           <div className="grid grid-cols-2">
             <div className="tile">
               <h3>CPU: <b>{vm.CPU.toFixed(1)}%</b></h3>
