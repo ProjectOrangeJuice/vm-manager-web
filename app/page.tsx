@@ -2,6 +2,8 @@
 
 import { ApiListResponse, WaitingTable, VMTable } from "./vm-table";
 import { useState, useEffect } from "react";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function Home() {
   const [apiResp, setVmDetails] = useState<ApiListResponse>({
@@ -28,6 +30,7 @@ export default function Home() {
     <body className="h-full">
       { VMTable(apiResp) }
       { WaitingTable(apiResp) }
+      <ToastContainer />
     </body>
   );
 }

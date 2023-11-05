@@ -1,4 +1,4 @@
-
+import { toast } from 'react-toastify';
 type VMStorage = {
   Name: string;
   Mount: string;
@@ -7,6 +7,7 @@ type VMStorage = {
 
 export type VMDetails = {
   Name: string;
+  Serial: string;
   CPU: number;
   Memory: number;
   Version: string;
@@ -33,7 +34,7 @@ export function WaitingTable(data: ApiListResponse) {
     return (<div></div>)
   }
 
-  const decline = (id:string) => {
+  const decline = (id: string) => {
     // Send post request to decline
     return () => {
       fetch(`${process.env.API_URL}/api/waiting/{id}`, {
@@ -41,11 +42,11 @@ export function WaitingTable(data: ApiListResponse) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ allow:false }),
+        body: JSON.stringify({ allow: false }),
       });
     }
   }
-  const accept = (id:string) => {
+  const accept = (id: string) => {
     // Send post request to decline
     return () => {
       fetch(`${process.env.API_URL}/api/waiting/${id}`, {
@@ -53,7 +54,7 @@ export function WaitingTable(data: ApiListResponse) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ allow:true }),
+        body: JSON.stringify({ allow: true }),
       });
     }
   }
@@ -72,7 +73,7 @@ export function WaitingTable(data: ApiListResponse) {
             <td>{vm.Name}</td>
             <td>{vm.Serial}</td>
             <td><button onClick={accept(vm.Serial)} className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Accept</button>
-            <button  onClick={decline(vm.Serial)} className="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Decline</button></td>
+              <button onClick={decline(vm.Serial)} className="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Decline</button></td>
           </tr>
         ))}
       </tbody>
@@ -89,6 +90,23 @@ export function VMTable(data: ApiListResponse) {
   if (data.DisconnectedClients == null || data.DisconnectedClients.length == 0) {
     data.DisconnectedClients = [];
   }
+
+  const updateClient = (id: string) => {
+    // Send post request to decline
+    return () => {
+      fetch(`${process.env.API_URL}/api/update/${id}`, {
+        method: "POST",
+      }).then((response) => {
+        if (response.status == 200) {
+          toast.success("Update started");
+        } else {
+          toast.error("Update failed");
+        }
+      });
+    }
+  }
+
+
   // Display vms in four columns
   return (
 
@@ -103,8 +121,8 @@ export function VMTable(data: ApiListResponse) {
           </div>
 
           <div className="tile">
-              <h3>Version: <b>{vm.Version}</b></h3>
-            </div>
+            <h3>Version: <b>{vm.Version}</b> <button className="border" onClick={updateClient(vm.Serial)}>Update</button></h3>
+          </div>
 
           <div className="grid grid-cols-2">
             <div className="tile">
