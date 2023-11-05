@@ -46,6 +46,12 @@ export function WaitingTable(data: ApiListResponse) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ allow: false }),
+      }).then((response) => {
+        if (response.status == 200) {
+          toast.success("Declined");
+        } else {
+          toast.error("Failed to decline");
+        }
       });
     }
   }
@@ -58,7 +64,13 @@ export function WaitingTable(data: ApiListResponse) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ allow: true }),
-      });
+      }).then((response) => {
+        if (response.status == 200) {
+          toast.success("Accepted");
+        } else {
+          toast.error("Failed to accept");
+        }
+      });;
     }
   }
 
